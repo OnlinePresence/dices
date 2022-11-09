@@ -1,0 +1,8 @@
+.dice-list {
+  display: flex;
+  flex-wrap: wrap;
+  width: 100%;
+  height: 250px;
+  justify-content: center;
+  margin: auto;
+}

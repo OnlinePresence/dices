@@ -1,0 +1,11 @@
+.dice {
+  height: 50px;
+  width: 50px;
+  margin: 20px;
+  border-radius: 10px;
+  cursor: pointer;
+  font-size: larger;
+  box-shadow: 0 6px 6px rgba(0, 0, 0, 0.15);
+  border: none;
+  font-family: "Roboto", sans-serif;
+}
