@@ -4,7 +4,7 @@ import "./DiceList.css";
 
 const DiceList = (props) => {
   return (
-    <div className="dice-list">
+    <div className="dice_list">
       {props.items.map((item) => (
         <Dice
           key={item.key}

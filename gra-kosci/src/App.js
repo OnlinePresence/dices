@@ -1,62 +1,71 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import "./App.css";
 import DiceList from "./Components/DicesList";
 
-const randomNumber = () => {
-  return Math.floor(Math.random() * (6 - 1 + 1)) + 1;
-};
-
-let dice_parameters = [
-  {
-    key: 0,
-    value: randomNumber(),
-    active: false,
-  },
-  {
-    key: 1,
-    value: randomNumber(),
-    active: false,
-  },
-  {
-    key: 2,
-    value: randomNumber(),
-    active: false,
-  },
-  {
-    key: 3,
-    value: randomNumber(),
-    active: false,
-  },
-  {
-    key: 4,
-    value: randomNumber(),
-    active: false,
-  },
-  {
-    key: 5,
-    value: randomNumber(),
-    active: false,
-  },
-  {
-    key: 6,
-    value: randomNumber(),
-    active: false,
-  },
-  {
-    key: 7,
-    value: randomNumber(),
-    active: false,
-  },
-  {
-    key: 8,
-    value: randomNumber(),
-    active: false,
-  },
-];
-
 const App = () => {
+  const randomNumber = () => {
+    return Math.floor(Math.random() * (6 - 1 + 1)) + 1;
+  };
+
+  let dice_parameters = [
+    {
+      key: 0,
+      value: randomNumber(),
+      active: false,
+    },
+    {
+      key: 1,
+      value: randomNumber(),
+      active: false,
+    },
+    {
+      key: 2,
+      value: randomNumber(),
+      active: false,
+    },
+    {
+      key: 3,
+      value: randomNumber(),
+      active: false,
+    },
+    {
+      key: 4,
+      value: randomNumber(),
+      active: false,
+    },
+    {
+      key: 5,
+      value: randomNumber(),
+      active: false,
+    },
+    {
+      key: 6,
+      value: randomNumber(),
+      active: false,
+    },
+    {
+      key: 7,
+      value: randomNumber(),
+      active: false,
+    },
+    {
+      key: 8,
+      value: randomNumber(),
+      active: false,
+    },
+  ];
+
   const [dices, setDices] = useState(dice_parameters);
   const [gameWon, setGameWon] = useState(false);
+  const runLocalSave = useRef(false);
+  let storedData;
+
+  useEffect(() => {
+    if (localStorage.getItem("dices") !== null) {
+      storedData = JSON.parse(localStorage.getItem("dices"));
+      setDices(storedData);
+    }
+  }, []);
 
   useEffect(() => {
     if (
@@ -64,7 +73,7 @@ const App = () => {
       dices.every((dice) => dice.value === dices[0].value)
     ) {
       setGameWon(true);
-      console.log("You win!");
+      console.log("Wygrana!");
     }
   }, [dices]);
 
@@ -93,6 +102,14 @@ const App = () => {
       );
     }
   };
+
+  useEffect(() => {
+    if (runLocalSave.current) {
+      localStorage.setItem("dices", JSON.stringify(dices));
+    } else {
+      runLocalSave.current = true;
+    }
+  }, [activeHandler, rollHandler]);
 
   return (
     <div className="App">
